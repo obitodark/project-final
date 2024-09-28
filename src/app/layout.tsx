@@ -1,8 +1,15 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from "next";
+
+import "./globals.css";
+import { Providers } from "@/store/Providers";
+
+import { inter } from "@/config/fonts";
+import ProvidersClient from "./providerClient";
+
+
+
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,9 +21,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+
+        <Providers>
+          <div className=" bg-stone-50">
+            <ProvidersClient>
+              {children}
+            </ProvidersClient>
+          </div>
+        </Providers>
+
+
+      </body>
     </html>
   );
 }
