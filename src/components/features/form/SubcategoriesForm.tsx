@@ -1,4 +1,4 @@
-
+"use client"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/form'
 import { FormFieldCustom, Grid } from '../../custom'
 import { InputText } from '../../custom/InputText'

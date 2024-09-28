@@ -1,18 +1,19 @@
-
+"use client"
 import { Form } from '../../ui/form'
 import { FormFieldCustom, Grid } from '../../custom'
 import { InputText } from '../../custom/InputText'
 import { Button } from '../../ui/button'
-import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-
 import { postRequest, putRequest } from '@/utils/http'
 import { brandSchema } from '@/utils/zod'
 import type { APIResponseBrand, Brand } from '@/interface/brand.interface'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useDispatch } from 'react-redux'
 import { closeModal } from '@/store/Modal'
+import { useForm } from 'react-hook-form'
+
+
 
 
 interface Props {
