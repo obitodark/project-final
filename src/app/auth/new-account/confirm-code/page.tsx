@@ -11,7 +11,7 @@ import Link from "next/link";
 
 
 
-export default function () {
+export default function ComfirmCodePage() {
   return (
     <div className="flex w-dvw h-dvh justify-center items-start sm:items-center">
       <Box className="w-full sm:w-[600px] h-[400px] py-5 px-5 border border-stone-300 rounded-md flex flex-col justify-center gap-3">

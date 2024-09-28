@@ -15,7 +15,6 @@ export const columnsCategory: ColumnDef<Category>[] = [
     accessorKey: "id",
     header: "Id",
   },
-
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -35,34 +34,32 @@ export const columnsCategory: ColumnDef<Category>[] = [
     header: "Descripción",
     cell: ({ row }) => <div className="text-center col-span-2 text-sm line-clamp-2">{row.getValue("description")}</div>,
   },
-
   {
     accessorKey: "status",
     header: "Estado",
   },
-
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const id = row.original.id;
-
-      const dispatch = useDispatch();
-      const deleteCategories = async () => {
-        await deleteRequest<APIResponseCategory>(`/categories/${id}`)
-      }
-      return (
-        <>
-          <DropdownMenuCustom label="Acciones" icon={<DotsHorizontalIcon className="h-4 w-4" />}>
-            <DropdownMenuItem
-              onClick={() => dispatch(openModal({ name: "modalCategory", value: "UPDATE", data: row.original }))}
-            >Editar</DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={deleteCategories}
-            >Borrar</DropdownMenuItem>
-          </DropdownMenuCustom>
-        </>
-      );
-    },
+    cell: ({ row }) => <ActionsCell row={row} />,
   },
 ];
+
+const ActionsCell = ({ row }: { row: any }) => {
+  const id = row.original.id;
+
+  const dispatch = useDispatch();
+  const deleteCategories = async () => {
+    await deleteRequest<APIResponseCategory>(`/categories/${id}`)
+  }
+  return (
+    <DropdownMenuCustom label="Acciones" icon={<DotsHorizontalIcon className="h-4 w-4" />}>
+      <DropdownMenuItem
+        onClick={() => dispatch(openModal({ name: "modalCategory", value: "UPDATE", data: row.original }))}
+      >Editar</DropdownMenuItem>
+      <DropdownMenuItem
+        onClick={deleteCategories}
+      >Borrar</DropdownMenuItem>
+    </DropdownMenuCustom>
+  );
+};

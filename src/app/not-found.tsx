@@ -3,7 +3,7 @@ import { PageNotFound } from "@/components/custom";
 
 
 
-export default function () {
+export default function NotFoundPage() {
   return (
     <PageNotFound />
   )

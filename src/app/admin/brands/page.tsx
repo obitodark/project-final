@@ -5,7 +5,7 @@ import { BrandModal } from '@/components/features/modal';
 
 
 
-export default function () {
+export default function BrandPage() {
 
   return (
     <div className='flex flex-col'>

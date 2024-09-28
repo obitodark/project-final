@@ -8,7 +8,7 @@ import { SignInForm } from "@/components/features/form/SignInForm";
 
 
 
-export default function () {
+export default function LoginPage() {
 
   return (
     <div className="flex w-full h-dvh bg-[#E7E8EB] justify-center   items-start sm:items-center ">

@@ -7,7 +7,7 @@ import { SubcategoriesModal } from '@/components/features/modal';
 
 
 
-export default function () {
+export default function SubcategoriesPage() {
 
 
   return (

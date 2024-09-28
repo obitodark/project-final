@@ -13,7 +13,7 @@ import { getToken, validateAuthUser } from "@/utils/authService";
 import { Button } from "@/components/ui/button";
 
 
-export default function () {
+export default function CheckoutPage() {
   const { data: cart = null } = useQuery<Cart>({
     queryKey: ['cart'],
     queryFn: async () => {
@@ -103,7 +103,8 @@ export default function () {
               <p className="mb-5">
                 {/* Disclaimer */}
                 <span className="text-xs">
-                  Al hacer clic en "Colocar orden", aceptas nuestros <a href="#" className="underline">términos y condiciones</a> y <a href="#" className="underline">política de privacidad</a>
+                  Al hacer clic en &quot;Colocar orden&quot;, aceptas nuestros <a href="#" className="underline">términos y condiciones</a> y <a href="#" className="underline">política de privacidad</a>
+
                 </span>
               </p>
               <Button

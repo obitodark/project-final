@@ -14,7 +14,6 @@ export const columnsBrand: ColumnDef<Brand>[] = [
     accessorKey: "id",
     header: "Id",
   },
-
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -29,28 +28,29 @@ export const columnsBrand: ColumnDef<Brand>[] = [
     },
     cell: ({ row }) => <div className="capitalize line-clamp-2">{row.getValue("name")}</div>,
   },
-
   {
     accessorKey: "status",
     header: "Estado",
   },
-
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const id = row.original.id;
-      const dispatch = useDispatch();
-      return (
-        <>
-          <DropdownMenuCustom label="Acciones" icon={<DotsHorizontalIcon className="h-4 w-4" />}>
-            <DropdownMenuItem
-              onClick={() => dispatch(openModal({ name: "modalBrand", value: "UPDATE", data: row.original }))}
-            >Editar</DropdownMenuItem>
-            <DropdownMenuItem>Borrar</DropdownMenuItem>
-          </DropdownMenuCustom>
-        </>
-      );
-    },
+    cell: ({ row }) => <ActionsCell row={row} />,
   },
 ];
+
+const ActionsCell = ({ row }: { row: any }) => {
+  const dispatch = useDispatch();
+  const id = row.original.id;
+
+  return (
+    <DropdownMenuCustom label="Acciones" icon={<DotsHorizontalIcon className="h-4 w-4" />}>
+      <DropdownMenuItem
+        onClick={() => dispatch(openModal({ name: "modalBrand", value: "UPDATE", data: row.original }))}
+      >
+        Editar
+      </DropdownMenuItem>
+      <DropdownMenuItem>Borrar</DropdownMenuItem>
+    </DropdownMenuCustom>
+  );
+};

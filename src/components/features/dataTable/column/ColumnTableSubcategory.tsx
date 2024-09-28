@@ -43,21 +43,23 @@ export const columnsSubcategory: ColumnDef<Subcategory>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const id = row.original.id;
-      console.log("id", id)
-      const dispatch = useDispatch();
-      return (
-        <>
-          <DropdownMenuCustom label="Acciones" icon={<DotsHorizontalIcon className="h-4 w-4" />}>
-
-            <DropdownMenuItem
-              onClick={() => dispatch(openModal({ name: "modalSubcategory", value: "UPDATE", data: row.original }))}
-            >Editar</DropdownMenuItem>
-            <DropdownMenuItem>Borrar</DropdownMenuItem>
-          </DropdownMenuCustom>
-        </>
-      );
-    },
+    cell: ({ row }) => <ActionsCell row={row} />,
   },
 ];
+
+const ActionsCell = ({ row }: { row: any }) => {
+  const id = row.original.id;
+  console.log("id", id)
+  const dispatch = useDispatch();
+  return (
+    <>
+      <DropdownMenuCustom label="Acciones" icon={<DotsHorizontalIcon className="h-4 w-4" />}>
+
+        <DropdownMenuItem
+          onClick={() => dispatch(openModal({ name: "modalSubcategory", value: "UPDATE", data: row.original }))}
+        >Editar</DropdownMenuItem>
+        <DropdownMenuItem>Borrar</DropdownMenuItem>
+      </DropdownMenuCustom>
+    </>
+  );
+};

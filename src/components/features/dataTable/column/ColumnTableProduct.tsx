@@ -85,35 +85,37 @@ export const columnsProducts: ColumnDef<Products>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const id = row.original.id
-      const dispatch = useDispatch();
-      const queryClient = useQueryClient();
-
-      const mutation = useMutation<any, Error, { idProduct: number | undefined }>({
-        mutationFn: async ({ idProduct }) => {
-          await deleteRequest<any>(`/product/${idProduct}`);
-        },
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['products'] });
-        },
-
-      });
-
-      const handlerDeleteProduct = (idProduct: number | undefined) => {
-        mutation.mutate({ idProduct });
-      };
-      return (
-        <>
-          <DropdownMenuCustom label="Acciones" icon={<DotsHorizontalIcon className="h-4 w-4" />}>
-            <DropdownMenuItem onClick={() => dispatch(openModal({ name: "modalProduct", value: "UPDATE", data: row.original }))}>Editar</DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => handlerDeleteProduct(id)}
-            >
-              Borrar</DropdownMenuItem>
-          </DropdownMenuCustom>
-        </>
-      );
-    },
+    cell: ({ row }) => <ActionsCell row={row} />,
   },
 ];
+
+const ActionsCell = ({ row }: { row: any }) => {
+  const id = row.original.id
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation<any, Error, { idProduct: number | undefined }>({
+    mutationFn: async ({ idProduct }) => {
+      await deleteRequest<any>(`/product/${idProduct}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+    },
+
+  });
+
+  const handlerDeleteProduct = (idProduct: number | undefined) => {
+    mutation.mutate({ idProduct });
+  };
+  return (
+    <>
+      <DropdownMenuCustom label="Acciones" icon={<DotsHorizontalIcon className="h-4 w-4" />}>
+        <DropdownMenuItem onClick={() => dispatch(openModal({ name: "modalProduct", value: "UPDATE", data: row.original }))}>Editar</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => handlerDeleteProduct(id)}
+        >
+          Borrar</DropdownMenuItem>
+      </DropdownMenuCustom>
+    </>
+  );
+};

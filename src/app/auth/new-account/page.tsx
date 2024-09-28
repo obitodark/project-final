@@ -7,7 +7,7 @@ import Link from "next/link";
 
 
 
-export default function () {
+export default function NewAccountPage() {
   return (
     <div className="flex w-dvw h-dvh justify-center items-center">
 

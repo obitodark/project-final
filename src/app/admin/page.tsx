@@ -8,7 +8,7 @@ import { getToken } from '@/utils/authService';
 
 
 
-export default function () {
+export default function ProductPage() {
 
   const token = getToken();
   console.log("token", token)

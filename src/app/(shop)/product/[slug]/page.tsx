@@ -31,7 +31,7 @@ interface QuantityProduct {
   quantity: number;
 }
 
-export default function ({ params }: Props) {
+export default function ProductSlugPage({ params }: Props) {
   const [state, setImage] = useState(0)
   const [isOpenDialog, isCloseDialog, stateDialog,] = useBoolean()
   const [count, setCount] = useState(1)

@@ -6,7 +6,7 @@ import { CategoriesModal } from '@/components/features/modal';
 
 
 
-export default function () {
+export default function CategoriesPage() {
 
 
   return (
