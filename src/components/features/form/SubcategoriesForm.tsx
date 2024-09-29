@@ -15,6 +15,7 @@ import { SelectCustom } from '@/components/custom/SelectCustom'
 import { SelectItem } from '@/components/ui/select'
 import { useDispatch } from 'react-redux'
 import { closeModal } from '@/store/Modal'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 
 interface Props {
@@ -22,9 +23,13 @@ interface Props {
   categories: Category[];
 
 }
-
+interface DataSubcategory {
+  id: number;
+  subcategory: z.infer<typeof subcategoriesSchema>
+}
 export const SubcategoriesForm = ({ subcategories, categories }: Props) => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof subcategoriesSchema>>({
     resolver: zodResolver(subcategoriesSchema),
     defaultValues: {
@@ -33,14 +38,34 @@ export const SubcategoriesForm = ({ subcategories, categories }: Props) => {
     },
   });
 
-  
+  const mutationCreate = useMutation({
+    mutationFn: async (data: z.infer<typeof subcategoriesSchema>) => {
+      await postRequest<APIResponseSubcategories>(`/subcategories`, data, true);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['subcategories'] });
+    },
+  });
+
+  const mutationUpdate = useMutation({
+    mutationFn: async (data: DataSubcategory) => {
+      await putRequest<APIResponseSubcategories>(`/subcategories/${data.id}`, data.subcategory, true);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['subcategories'] });
+    },
+  });
+
 
   const onSubmit = async (values: z.infer<typeof subcategoriesSchema>) => {
     const subcategoryData = { ...values };
     if (subcategories) {
-      await putRequest<APIResponseSubcategories>(`/subcategories/${subcategories.id}`, subcategoryData,true);
+      mutationUpdate.mutate({
+        id: subcategories.id,
+        subcategory: subcategoryData
+      })
     } else {
-      await postRequest<APIResponseSubcategories>("/subcategories", subcategoryData,true);
+      mutationCreate.mutate({ ...subcategoryData })
     }
     dispatch(closeModal("modalSubcategory"))
   }

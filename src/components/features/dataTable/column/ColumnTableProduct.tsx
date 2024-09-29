@@ -81,7 +81,6 @@ export const columnsProducts: ColumnDef<Products>[] = [
     accessorKey: "subcategory.name",
     header: "Subcategoria",
   },
-
   {
     id: "actions",
     enableHiding: false,
@@ -94,18 +93,17 @@ const ActionsCell = ({ row }: { row: any }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<any, Error, { idProduct: number | undefined }>({
+  const mutationDelete = useMutation<any, Error, { idProduct: number | undefined }>({
     mutationFn: async ({ idProduct }) => {
-      await deleteRequest<any>(`/product/${idProduct}`);
+      await deleteRequest<any>(`/product/${idProduct}`,true);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
     },
-
   });
 
   const handlerDeleteProduct = (idProduct: number | undefined) => {
-    mutation.mutate({ idProduct });
+    mutationDelete.mutate({ idProduct });
   };
   return (
     <>

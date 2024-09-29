@@ -11,6 +11,7 @@ import type { APIResponseProduct } from '@/interface';
 import { getToken, validateAuthUser } from '@/utils/authService';
 import { getRequest, postRequest } from '@/utils/http';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface Props {
@@ -35,7 +36,7 @@ export default function ProductSlugPage({ params }: Props) {
   const queryClient = useQueryClient();
   const [error, setError] = useState<any>(null)
   const { slug } = params
-
+  const router = useRouter()
   const { data: product = undefined } = useQuery({
     queryKey: ['product'],
     queryFn: async () => {
@@ -66,9 +67,14 @@ export default function ProductSlugPage({ params }: Props) {
             quantity: count
           }
         })
+      } else {
+        router.push("/auth/login")
       }
+    } else {
+      router.push("/auth/login")
     }
     isCloseDialog()
+
   }
 
   return (

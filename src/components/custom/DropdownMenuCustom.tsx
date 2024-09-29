@@ -1,7 +1,6 @@
 import React from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 
 interface Props {
   children: React.ReactNode;

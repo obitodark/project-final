@@ -9,7 +9,6 @@ interface GridProps {
   span?: { xs?: number; sm?: number; md?: number; lg?: number; xl?: number };
   className?: string;
 }
-
 export const Grid = ({
   children,
   container = false,
@@ -32,7 +31,6 @@ export const Grid = ({
       .join(' ')
     : '';
 
-
   const gapClasses = container
     ? [
       spacing.xs !== undefined ? `gap-${spacing.xs}` : '',
@@ -45,7 +43,6 @@ export const Grid = ({
       .join(' ')
     : '';
 
-
   const spanClasses = item
     ? [
       span.xs !== undefined ? `col-span-${span.xs}` : '',
@@ -57,7 +54,6 @@ export const Grid = ({
       .filter(Boolean)
       .join(' ')
     : '';
-
   return (
     <div className={`${container ? 'grid' : ''} ${gridColsClasses} ${gapClasses} ${spanClasses} ${className}`}>
       {children}

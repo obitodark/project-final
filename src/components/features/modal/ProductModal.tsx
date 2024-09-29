@@ -50,7 +50,6 @@ export const ProductModal = () => {
 
       <ProductForm
         products={modal.data}
-
         categories={categories}
         brands={brands}
         subcategories={subcategories}

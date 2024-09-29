@@ -1,10 +1,7 @@
-
-
 import { Title } from '@/components/custom/Title';
 import { ProductModal } from '@/components/features/modal/ProductModal';
 import { TableProducts } from '@/components/features/dataTable';
 import { getToken } from '@/utils/authService';
-
 
 
 

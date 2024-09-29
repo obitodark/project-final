@@ -18,6 +18,7 @@ import { useState } from 'react'
 import { postRequest, putRequest } from '@/utils/http'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useDispatch } from 'react-redux'
+import { closeModal } from '@/store/Modal'
 
 
 interface Props {
@@ -59,16 +60,12 @@ export const ProductForm = ({ categories, brands, subcategories, products }: Pro
   const handleFileChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = [...selectedFiles];
-      newFiles[index] = e.target.files[0]; // Replace the file at the given index
+      newFiles[index] = e.target.files[0];
       setSelectedFiles(newFiles);
       if (products && products.images[index]) {
         setIdImagesUpdated(prevIds => [...prevIds, products.images[index].id]);
-        console.log("data", products.images[index].id)
-
       }
-      console.log("data", newFiles)
-
-      const totalSize = newFiles.reduce((total, file) => total + file.size, 0);
+      const totalSize = newFiles.reduce((total, file) => total + file?.size, 0);
       if (totalSize > 10 * 1024 * 1024) {
         setUploadError("El tamaño total de las imágenes no puede exceder 10 MB.");
       } else {
@@ -80,7 +77,7 @@ export const ProductForm = ({ categories, brands, subcategories, products }: Pro
 
   const handlerCreateProduct = async (values: z.infer<typeof productSchema>) => {
     const uploadedImageIds = await uploadImages(selectedFiles);
-    if (uploadedImageIds.length > 1) {
+    if (uploadedImageIds.length > 0) {
       const productData = {
         ...values,
         images: uploadedImageIds,
@@ -88,9 +85,11 @@ export const ProductForm = ({ categories, brands, subcategories, products }: Pro
       mutationCreate.mutate(productData)
     }
   }
+
   const mutationCreate = useMutation<Products[], Error, ProductData>({
     mutationFn: async (productData) => {
       const response = await postRequest<APIResponseProducts>("/product", productData, true);
+      dispatch(closeModal("modalProduct"))
       return response.data?.result || [];
     },
     onSuccess: () => {
@@ -102,6 +101,7 @@ export const ProductForm = ({ categories, brands, subcategories, products }: Pro
     mutationFn: async (productData) => {
       if (products) {
         await putRequest<APIResponseProducts>(`/product/${products.id}`, productData, true)
+        dispatch(closeModal("modalProduct"))
       }
       return []
     },
@@ -123,7 +123,6 @@ export const ProductForm = ({ categories, brands, subcategories, products }: Pro
       return indexToReplace !== undefined ? uploadedImageIds[indexToReplace] : existingId;
     });
 
-
     const numberOfReplacements = idImagesUpdated.length;
     const extraIds = uploadedImageIds.slice(numberOfReplacements);
     const idUpdated = [...finalIds, ...extraIds];
@@ -140,15 +139,15 @@ export const ProductForm = ({ categories, brands, subcategories, products }: Pro
   const onSubmit = async (values: z.infer<typeof productSchema>) => {
     if (uploadError) {
       console.error(uploadError);
-      return; // No proceder si hay un error
+      return;
     }
     if (products) {
-      handlerUpdateProduct(values);
+      await handlerUpdateProduct(values);
     } else {
-      handlerCreateProduct(values);
+      await handlerCreateProduct(values);
+
     }
-    console.log("data", selectedFiles)
-    console.log(values)
+
 
   }
 

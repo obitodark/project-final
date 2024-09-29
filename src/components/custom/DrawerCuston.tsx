@@ -1,6 +1,5 @@
 
-
-import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet"
+import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "../ui/sheet"
 
 interface Props {
   direction: "top" | "right" | "bottom" | "left";
@@ -12,9 +11,7 @@ interface Props {
 }
 export const DrawerCuston = ({ direction, title = "", description, children, status = false, onClose }: Props) => {
 
-
   return (
-
     <Sheet open={status} onOpenChange={onClose} >
       <SheetContent side={direction}>
         <SheetHeader>
@@ -28,8 +25,6 @@ export const DrawerCuston = ({ direction, title = "", description, children, sta
         </SheetFooter>
       </SheetContent>
     </Sheet>
-
-
   )
 }
 

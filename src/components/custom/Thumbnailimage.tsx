@@ -2,7 +2,6 @@ import type { ImageProduct } from "@/interface";
 import Image from "next/image";
 import type { ButtonHTMLAttributes } from "react";
 
-
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   indexcurrent: number;
   image: ImageProduct;

@@ -16,13 +16,11 @@ import { useQuery } from "@tanstack/react-query"
 export const TableBrand = () => {
 
   const dispatch = useDispatch();
-  
   const { data: brands = [] } = useQuery<Brand[]>({
     queryKey: ['brands'],
     queryFn: async () => {
       return (await getRequest<APIResponseBrand>("/brands")).data?.result || [];
     },
-
   });
   return (
     <Box className="p-2 sm:p-5 bg-white shadow-xl shadow-stone-200 rounded-xl mt-3">

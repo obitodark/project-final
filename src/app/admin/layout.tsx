@@ -1,10 +1,6 @@
-
 import type { Metadata } from "next";
 import { Providers } from "@/store/Providers";
 import { Footer, Header, SideBarLayout } from "@/components/layout";
-
-
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +13,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-
     <Providers>
       <SideBarLayout>
         {children}

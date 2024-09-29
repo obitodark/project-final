@@ -8,13 +8,14 @@ import { DropdownMenuCustom } from "../../../custom";
 import { useDispatch } from "react-redux";
 import { openModal } from "@/store/Modal";
 import type { Subcategory } from "@/interface";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteRequest } from "@/utils/http";
 
 export const columnsSubcategory: ColumnDef<Subcategory>[] = [
   {
     accessorKey: "id",
     header: "Id",
   },
-
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -32,14 +33,11 @@ export const columnsSubcategory: ColumnDef<Subcategory>[] = [
   {
     accessorKey: "category.name",
     header: "Categoria",
-
   },
-
   {
     accessorKey: "status",
     header: "Estado",
   },
-
   {
     id: "actions",
     enableHiding: false,
@@ -49,8 +47,20 @@ export const columnsSubcategory: ColumnDef<Subcategory>[] = [
 
 const ActionsCell = ({ row }: { row: any }) => {
   const id = row.original.id;
-  console.log("id", id)
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+  const mutationDelete = useMutation({
+    mutationFn: async (idSubcategory: number) => {
+      await deleteRequest<any>(`/subcategories/${idSubcategory}`, true);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['subcategories'] });
+    },
+  });
+  const handlerDeleteSubcategory = () => {
+    mutationDelete.mutate(id)
+  }
   return (
     <>
       <DropdownMenuCustom label="Acciones" icon={<DotsHorizontalIcon className="h-4 w-4" />}>
@@ -58,7 +68,9 @@ const ActionsCell = ({ row }: { row: any }) => {
         <DropdownMenuItem
           onClick={() => dispatch(openModal({ name: "modalSubcategory", value: "UPDATE", data: row.original }))}
         >Editar</DropdownMenuItem>
-        <DropdownMenuItem>Borrar</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={handlerDeleteSubcategory}
+        >Borrar</DropdownMenuItem>
       </DropdownMenuCustom>
     </>
   );

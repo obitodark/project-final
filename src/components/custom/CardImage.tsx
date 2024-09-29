@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 interface Prop {
   src: string;
   alt?: string;
@@ -16,7 +15,7 @@ export const CardImage = ({ src, alt = "image", aspectRatio = "1/1.2", className
         src={src}
         alt={alt}
         fill
-        style={{ objectFit: "cover", objectPosition: "center" }} // Ajuste con fill y objectFit
+        style={{ objectFit: "cover", objectPosition: "center" }} 
         className="rounded-xl"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}

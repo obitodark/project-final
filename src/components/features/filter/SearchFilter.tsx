@@ -5,7 +5,6 @@ import { setName, setPriceOrder } from "@/store/filter/filter";
 import { IoIosSearch } from "react-icons/io";
 import { VscSettings } from "react-icons/vsc";
 import { Button } from "../../ui/button";
-
 import { DrawerFilter } from "../drawer/DrawerFilter";
 import { useBoolean } from "@/hook/useBoolean";
 import { SelectCustom } from "../../custom/SelectCustom";
@@ -15,7 +14,6 @@ import { SelectItem } from "../../ui/select";
 export const SearchFilter = () => {
   const dispatch = useDispatch();
   const [isOpen, isClose, state] = useBoolean()
-
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setName(event.target.value));
@@ -38,12 +36,10 @@ export const SearchFilter = () => {
             className="flex  gap-1 rounded-md w-full"
             onChange={handleNameChange}
           />
-
         </div>
         <div className="flex gap-3 w-full">
           <div className=" w-full  ">
             <div>
-
               <SelectCustom placeHolder="Orden" onValueChange={handleComboBoxChange}>
                 {["mayor a menor", "menor a mayor"].map(item => (
                   <SelectItem key={item} value={item}>
@@ -53,12 +49,10 @@ export const SearchFilter = () => {
               </SelectCustom>
             </div>
           </div>
-
           <Button className=" lg:hidden p-5 " onClick={() => isOpen()}>
             <VscSettings size={22} className="text-center" />
           </Button>
         </div>
-
       </div>
     </div>
   )

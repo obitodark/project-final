@@ -14,7 +14,6 @@ export const CountdownTimer = ({ timeSeconds = 300 }: Props) => {
     expiryTimestamp: time,
     onExpire: () => console.log('El tiempo ha terminado!'),
   });
-
   return (
     <Box className='flex flex-col justify-center items-center w-full '>
       <Box className=' se w-[300px] text-center text-stone-500'>

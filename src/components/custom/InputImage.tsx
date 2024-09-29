@@ -2,13 +2,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Input } from "../ui/input";
-
 interface Props {
   label?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   initialImage?: string | null
 }
-
 export const InputImage = ({ label = "picture", onChange, initialImage = null }: Props) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(initialImage);
 

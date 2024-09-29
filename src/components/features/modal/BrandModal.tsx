@@ -7,7 +7,6 @@ import type { ModalBrand } from '@/interface';
 import { BrandForm } from '../form';
 
 export const BrandModal = () => {
-
   const dispatch = useDispatch();
   const modal: ModalBrand = useSelector((state: any) => state.modal.modals.modalBrand);
 
@@ -19,9 +18,7 @@ export const BrandModal = () => {
       description={`datos de la Marca`}
       className="w-screen h-screen sm:max-w-[825px] sm:h-auto border-2 overflow-auto"
     >
-
       <BrandForm brand={modal.data} />
-
     </DialogCustom>
   )
 }

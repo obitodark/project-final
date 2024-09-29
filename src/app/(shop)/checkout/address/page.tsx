@@ -9,8 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 import { jwtDecode } from "jwt-decode";
 
 
-
-
 type Items = {
   name: String;
   component: React.ReactElement;
@@ -18,10 +16,7 @@ type Items = {
   title?: string;
 }
 
-
-
 export default function NamePage() {
-
 
   const { data: user = undefined } = useQuery<User>({
     queryKey: ['user'],
@@ -51,16 +46,9 @@ export default function NamePage() {
   ]
   return (
     <div className="flex  justify-center items-center mb-40  sm:px-5  w-auto lg:w-[1000px]">
-
       {user && <div className="w-full self-center">
         <TabsCustom items={tabs} />
       </div>}
-
     </div>
-
-
-
-
-
   );
 }

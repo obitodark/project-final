@@ -3,11 +3,12 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
-import type { Brand, Category, Products } from "@/interface";
+import type { Brand, ModalBrand } from "@/interface";
 import { DropdownMenuCustom } from "../../../custom";
-import Image from "next/image";
-import { useDispatch } from "react-redux";
-import { openModal } from "@/store/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal, openModal } from "@/store/Modal";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteRequest } from "@/utils/http";
 
 export const columnsBrand: ColumnDef<Brand>[] = [
   {
@@ -42,7 +43,19 @@ export const columnsBrand: ColumnDef<Brand>[] = [
 const ActionsCell = ({ row }: { row: any }) => {
   const dispatch = useDispatch();
   const id = row.original.id;
+  const queryClient = useQueryClient();
+  const mutationDelete = useMutation({
+    mutationFn: async (idBrand: number) => {
+      await deleteRequest<any>(`/brands/${idBrand}`, true);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['brands'] });
+    },
+  });
 
+  const handlerDeleteBrand = () => {
+    mutationDelete.mutate(id)
+  }
   return (
     <DropdownMenuCustom label="Acciones" icon={<DotsHorizontalIcon className="h-4 w-4" />}>
       <DropdownMenuItem
@@ -50,7 +63,9 @@ const ActionsCell = ({ row }: { row: any }) => {
       >
         Editar
       </DropdownMenuItem>
-      <DropdownMenuItem>Borrar</DropdownMenuItem>
+      <DropdownMenuItem
+        onClick={handlerDeleteBrand}
+      >Borrar</DropdownMenuItem>
     </DropdownMenuCustom>
   );
 };

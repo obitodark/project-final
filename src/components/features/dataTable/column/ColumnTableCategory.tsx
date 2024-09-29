@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { openModal } from "@/store/Modal";
 import { deleteRequest } from "@/utils/http";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const columnsCategory: ColumnDef<Category>[] = [
   {
@@ -47,10 +48,19 @@ export const columnsCategory: ColumnDef<Category>[] = [
 
 const ActionsCell = ({ row }: { row: any }) => {
   const id = row.original.id;
-
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const deleteCategories = async () => {
-    await deleteRequest<APIResponseCategory>(`/categories/${id}`)
+
+  const mutationDelete = useMutation({
+    mutationFn: async (idCategory: number) => {
+      await deleteRequest<any>(`/categories/${idCategory}`, true);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+    },
+  });
+  const deleteCategories = () => {
+    mutationDelete.mutate(id)
   }
   return (
     <DropdownMenuCustom label="Acciones" icon={<DotsHorizontalIcon className="h-4 w-4" />}>

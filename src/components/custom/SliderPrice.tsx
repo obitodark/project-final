@@ -1,11 +1,9 @@
 
 import { Slider } from '../ui/slider'
 import { cn } from '@/lib/utils'
-
 import { Box } from './Box'
 import { useCallback, useState } from 'react';
 import { InputText } from './InputText';
-
 
 interface Props {
   max?: number;
@@ -51,7 +49,6 @@ export const SliderPrice = ({ max = 1000, min = 0, onChange, typeCoin, label }: 
         onValueChange={handleSliderChange}
         step={1}
         className={cn("w-[80%]")}
-
       />
     </Box>
   )

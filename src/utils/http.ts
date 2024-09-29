@@ -18,8 +18,8 @@ const request = async <T>(
     const response = await instance[method]<T>(url, data);
     return { data: response.data, state: response.status };
   } catch (error: any) {
-    const data = error.response.data || []
-    const status = error.response.status || []
+    const data = error.response?.data || []
+    const status = error.response?.status || []
 
 
     return { data, state: status };

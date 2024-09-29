@@ -26,7 +26,6 @@ export default function CartPage() {
       className=" flex  justify-center items-center pb-72 px-3">
       <Box className="flex flex-col ">
         <Title title="Carrito" subtitle="Agregar mas item" />
-
         <Link href={"/"} className="underline text-sm hover:text-indigo-500">
           Continua comprando</Link>
         <Grid container cols={{ xs: 1, md: 2 }} spacing={{ xs: 10 }}>

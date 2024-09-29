@@ -2,12 +2,11 @@ import React from "react";
 import { Control, FieldValues, Path } from "react-hook-form";
 import { FormItem, FormLabel, FormControl, FormMessage, FormField } from "../ui/form";
 
-
 interface FormFieldSelectCustomProps<T extends FieldValues> {
   control: Control<T>;
   name: Path<T>;
   label: string;
-  rules?: any; // Puedes definir una interfaz específica para reglas si es necesario
+  rules?: any; 
   children: React.ReactElement;
 }
 

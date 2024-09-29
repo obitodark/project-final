@@ -59,7 +59,6 @@ export const BrandForm = ({ brand }: Props) => {
       })
     }
     dispatch(closeModal("modalBrand"))
-    console.log(brand)
   }
 
 
@@ -76,7 +75,6 @@ export const BrandForm = ({ brand }: Props) => {
               <InputText placeholder="Categoria .." />
             </FormFieldCustom>
           </Grid>
-
           <Grid item span={{ xs: 2 }}>
             <Button type="submit" className="mt-10 rounded text-sm">
               {brand ? "Actualizar" : "Crear"}

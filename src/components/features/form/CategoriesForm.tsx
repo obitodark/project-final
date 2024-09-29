@@ -11,16 +11,20 @@ import { postRequest, putRequest } from '@/utils/http'
 import { categoriesSchema } from '@/utils/zod/CategoriesSchema'
 import { useDispatch } from 'react-redux'
 import { closeModal } from '@/store/Modal'
-
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 
 interface Props {
   categories?: Category;
 
 }
-
+interface DataCategory {
+  id: number;
+  category: z.infer<typeof categoriesSchema>
+}
 export const CategoriesForm = ({ categories }: Props) => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof categoriesSchema>>({
     resolver: zodResolver(categoriesSchema),
     defaultValues: {
@@ -29,17 +33,35 @@ export const CategoriesForm = ({ categories }: Props) => {
     },
   });
 
+  const mutationCreate = useMutation({
+    mutationFn: async (data: z.infer<typeof categoriesSchema>) => {
+      await postRequest<APIResponseCategory>(`/categories`, data, true);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+    },
+  });
+
+  const mutationUpdate = useMutation({
+    mutationFn: async (data: DataCategory) => {
+      await putRequest<APIResponseCategory>(`/categories/${data.id}`, data.category, true);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+    },
+  });
 
   const onSubmit = async (values: z.infer<typeof categoriesSchema>) => {
     const categoryData = { ...values };
     if (categories) {
-      await putRequest<APIResponseCategory>(`/categories/${categories.id}`, categoryData,true);
+      mutationUpdate.mutate({
+        id: categories.id,
+        category: categoryData
+      })
     } else {
-      await postRequest<APIResponseCategory>("/categories", categoryData,true);
-  
+      mutationCreate.mutate({ ...categoryData })
     }
     dispatch(closeModal("modalCategory"))
-    console.log(categories)
   }
 
 
@@ -52,7 +74,6 @@ export const CategoriesForm = ({ categories }: Props) => {
               control={form.control}
               name="name"
               label="Nombre"
-
             >
               <InputText placeholder="Categoria .." />
             </FormFieldCustom>
@@ -71,9 +92,6 @@ export const CategoriesForm = ({ categories }: Props) => {
               {categories ? "Actualizar" : "Crear"}
             </Button>
           </Grid>
-
-
-
         </Grid>
       </form>
     </Form >

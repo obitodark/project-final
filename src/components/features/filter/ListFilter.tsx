@@ -16,22 +16,17 @@ import type { APIResponseBrand, APIResponseCategory, APIResponseSubcategories, B
 import { getRequest } from "@/utils/http"
 
 
-
-
 export const ListFilter = () => {
   const dispatch = useDispatch();
   const filters = useAppSelector((state) => state.filter);
   const router = useRouter();
   const buildUrl = () => buildProductSearchUrl(filters);;
-
   const handleCheckboxChange = (item: string, type: 'subcategories' | 'brands') => {
-
     if (type === 'subcategories') {
       dispatch(toggleSubcategory(item));
     } else {
       dispatch(toggleBrand(item));
     }
-
   };
 
   const areFiltersApplied = () => {
@@ -63,9 +58,7 @@ export const ListFilter = () => {
     queryKey: ['subcategories'],
     queryFn: async () => {
       return (await getRequest<APIResponseSubcategories>("/subcategories")).data?.result || [];
-
     },
-
   });
 
   const handleSliderChangeMin = (newValue: number) => {
@@ -101,19 +94,16 @@ export const ListFilter = () => {
               ))}
             </RadioGroup>
           </ListDropdown>
-
           <ListDropdown label="Subcategorias">
             {subcategories.map(subcategory => (
               <CheckboxItem key={subcategory.id} label={subcategory.name} onCheckedChange={() => handleCheckboxChange(subcategory.name, "subcategories")} />
             ))}
           </ListDropdown>
-
           <ListDropdown label="Marcas">
             {brands.map(brand => (
               <CheckboxItem key={brand.id} label={brand.name} onCheckedChange={() => handleCheckboxChange(brand.name, "brands")} />
             ))}
           </ListDropdown>
-
           <ListDropdown label="Rango de Precio">
             <SliderPrice max={3000} min={0} label='Max:' onChange={handleSliderChangeMax} />
             <SliderPrice max={3000} min={0} label='Min:' onChange={handleSliderChangeMin} />

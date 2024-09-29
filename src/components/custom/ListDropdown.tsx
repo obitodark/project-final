@@ -4,14 +4,13 @@ interface Props {
   children: React.ReactNode;
   label: string;
 }
-
-export const ListDropdown=({children,label}:Props)=> {
+export const ListDropdown = ({ children, label }: Props) => {
   return (
     <>
       <AccordionItem value={label}>
-        <AccordionTrigger>{ label}</AccordionTrigger>
+        <AccordionTrigger>{label}</AccordionTrigger>
         <AccordionContent>
-       {children}
+          {children}
         </AccordionContent>
       </AccordionItem>
     </>

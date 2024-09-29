@@ -1,5 +1,4 @@
 "use client"
-
 import * as React from "react"
 import {
   CaretSortIcon,
@@ -43,8 +42,6 @@ import { DropdownMenuCustom } from "./DropdownMenuCustom"
 import { columnsProducts } from "@/components/features/dataTable"
 
 import { DataTablePagination } from "./DataTablePagination"
-
-
 
 interface Props<T> {
   data: T[];
@@ -110,11 +107,9 @@ export function DataTableCustom<T>({ data, columns, pageIndex = 0, pageSize = 5 
                   checked={column.getIsVisible()}
                   onCheckedChange={(value) =>
                     column.toggleVisibility(!!value)
-                  }
-                >
+                  } >
                   {column.id}
-                </DropdownMenuCheckboxItem>
-              )
+                </DropdownMenuCheckboxItem>)
             })}
         </DropdownMenuCustom>
       </div>
@@ -132,8 +127,7 @@ export function DataTableCustom<T>({ data, columns, pageIndex = 0, pageSize = 5 
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                    </TableHead>
-                  )
+                    </TableHead>)
                 })}
               </TableRow>
             ))}
@@ -143,8 +137,7 @@ export function DataTableCustom<T>({ data, columns, pageIndex = 0, pageSize = 5 
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
+                  data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
@@ -159,8 +152,7 @@ export function DataTableCustom<T>({ data, columns, pageIndex = 0, pageSize = 5 
               <TableRow>
                 <TableCell
                   colSpan={columnsProducts.length}
-                  className="h-24 text-center"
-                >
+                  className="h-24 text-center"  >
                   No results.
                 </TableCell>
               </TableRow>

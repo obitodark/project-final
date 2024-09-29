@@ -29,7 +29,6 @@ export const DialogCustom = ({ title, description, children, state = false, onCl
           </DialogDescription>
         </DialogHeader>
         {children}
-      
       </DialogContent>
     </Dialog>
 

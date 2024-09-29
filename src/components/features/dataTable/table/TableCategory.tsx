@@ -11,12 +11,11 @@ import { DataTableCustom } from "@/components/custom/DataTableCustom"
 import { Box } from "@/components/custom/Box"
 import type { APIResponseCategory, Category } from "@/interface"
 import { columnsCategory } from "../column/ColumnTableCategory"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 
 export const TableCategory = () => {
 
   const dispatch = useDispatch();
-
   const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ['categories'],
     queryFn: async () => {

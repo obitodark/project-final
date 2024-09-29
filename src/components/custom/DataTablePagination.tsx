@@ -17,7 +17,7 @@ export function DataTablePagination({ table }: Props) {
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          anterior
         </Button>
         <Button
           variant="outline"
@@ -25,7 +25,7 @@ export function DataTablePagination({ table }: Props) {
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          proximo
         </Button>
       </div>
     </div>

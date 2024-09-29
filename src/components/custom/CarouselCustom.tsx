@@ -4,7 +4,6 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 
-
 export interface Images {
   id?: number;
   name?: string;
@@ -45,7 +44,7 @@ export const CarouselCustom = ({ images, value = 0 }: Props) => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="" />
+      <CarouselPrevious  />
       <CarouselNext />
     </Carousel>
   );
