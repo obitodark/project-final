@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation"
 
 
 export const Sidebar = () => {
-  const tokenState = useSelector((state: any) => state.auth.authTokens.token);
+  // const tokenState = useSelector((state: any) => state.auth.authTokens.token);
   const [user, setUser] = useState<string | null>(null);
   const router = useRouter()
 
@@ -28,9 +28,9 @@ export const Sidebar = () => {
     router.push("/")
   }
 
-  useEffect(() => {
-    setUser(jwtDecode(tokenState).sub || null)
-  }, [])
+  // useEffect(() => {
+  //   setUser(jwtDecode(tokenState).sub || null)
+  // }, [])
   return (
     <>
       <Box className={`bg-white    min-h-dvh p-5 w-auto sm:w-[320px] flex flex-col justify-between`}>

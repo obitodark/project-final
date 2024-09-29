@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '@/store/Modal';
 import type {  APIResponseCategory, Category, ModalSubcategory,  } from '@/interface';
 import { SubcategoriesForm } from '../form';
-import { useEffect, useState } from 'react';
 import { getRequest } from '@/utils/http';
 import { useQuery } from '@tanstack/react-query';
 

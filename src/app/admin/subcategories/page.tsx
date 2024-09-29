@@ -4,9 +4,6 @@ import { TableSubcategory } from '@/components/features/dataTable/table/TableSub
 import { SubcategoriesModal } from '@/components/features/modal';
 
 
-
-
-
 export default function SubcategoriesPage() {
 
 

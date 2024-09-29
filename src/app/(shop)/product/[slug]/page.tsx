@@ -7,14 +7,11 @@ import { QuantitySelector } from '@/components/features/product';
 import { Button } from '@/components/ui/button';
 import { titleFont } from '@/config/fonts';
 import { useBoolean } from '@/hook/useBoolean';
-import type { APIResponseProduct, Products, ResponseJwt } from '@/interface';
+import type { APIResponseProduct } from '@/interface';
 import { getToken, validateAuthUser } from '@/utils/authService';
 import { getRequest, postRequest } from '@/utils/http';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { jwtDecode } from 'jwt-decode';
-import { useEffect, useState } from 'react';
-
-
+import { useState } from 'react';
 
 interface Props {
   params: {
@@ -39,7 +36,6 @@ export default function ProductSlugPage({ params }: Props) {
   const [error, setError] = useState<any>(null)
   const { slug } = params
 
-
   const { data: product = undefined } = useQuery({
     queryKey: ['product'],
     queryFn: async () => {
@@ -52,12 +48,11 @@ export default function ProductSlugPage({ params }: Props) {
       const { state } = await postRequest(`/cart/${dataProduct.idUser}/add`, dataProduct.product, true)
       state !== 201 ? setError(" Stock no disponible") : setError(null)
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] })
-    ,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
   });
+
   const handlerAdd = (value: number) => setCount(value);
   const handlerReduce = (value: number) => setCount(value);
-
 
   const handlerAddItem = () => {
     const token = getToken()
@@ -86,7 +81,6 @@ export default function ProductSlugPage({ params }: Props) {
           className='p-3'
         />
       </Grid>
-
       {product && <CardDialog
         state={stateDialog}
         onClose={isCloseDialog}
@@ -119,16 +113,11 @@ export default function ProductSlugPage({ params }: Props) {
             {product?.name}
           </h1>
           <span className=' mb-12 text-lg block  '>Nike</span>
-
-          {/* <SizeSelector
-            selectSize={product.sizes[0]}
-            availableSize={product.sizes} /> */}
           <QuantitySelector
             quantity={1}
             onAdd={handlerAdd}
             onReduce={handlerReduce}
           />
-
           <Box className='flex flex-col  mt-10 gap-2'>
             <span className='  text-xl  font-bold '>
               PEN {product?.price}
@@ -139,7 +128,6 @@ export default function ProductSlugPage({ params }: Props) {
               Añadir al carrito
             </Button>
           </Box>
-
           <h3 className='font-bold text-sm mt-5'>Descripción</h3>
           <p className='font-light'>
             {product?.description}

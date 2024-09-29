@@ -1,25 +1,22 @@
 "use client"
 import Link from "next/link";
 import { Grid } from "@/components/custom";
-import { ProductItemCard, QuantitySelector } from "@/components/features/product";
+import { ProductItemCard } from "@/components/features/product";
 import { Title } from "@/components/custom/Title";
 import { Box } from "@/components/custom/Box";
 import { useQuery } from "@tanstack/react-query";
 import type { APIResponseCard, Cart } from "@/interface";
 import { getRequest } from "@/utils/http";
-
 import Image from "next/image";
 
 
-
-export default function () {
+export default function CartPage() {
 
   const { data: cart = null } = useQuery<Cart>({
     queryKey: ['cart'],
     queryFn: async () => {
       return (await getRequest<APIResponseCard>("/cart/byUser", true)).data?.result || null;
     },
-
   });
   const totalQuantity = cart && cart.cartItems.filter(item => item.status == "SELECTED").reduce((total, item) => total + item.quantity, 0);
   const idUser = cart && cart?.user.id;
@@ -45,12 +42,10 @@ export default function () {
                   idUser={idUser ? idUser : 0}
                 />
               ))
-              :
-              <Box className="flex flex-col justify-center items-center">
+              : <Box className="flex flex-col justify-center items-center">
                 <h5 className={` w-full  font-semibold text-xl
                 `} > Sin Articulos en el Carrito</h5>
                 <Image src={"/imgs/cart-empty.png"} width={100} height={100} alt="image-empty" />
-
               </Box>}
           </Grid>
           <Grid item span={{ xs: 1, md: 1 }} className="bg-gray-100 border rounded-xl p-7 h-fit w-full">

@@ -4,10 +4,7 @@ import { CountdownTimer } from "@/components/custom";
 import { Box } from "@/components/custom/Box";
 import { Title } from "@/components/custom/Title";
 import { ComfirmationCodeForm } from "@/components/features/form";
-import { UserForm } from "@/components/features/form/UserForm";
-import { Button } from "@/components/ui/button";
-
-import Link from "next/link";
+import { Suspense } from "react";
 
 
 
@@ -18,7 +15,9 @@ export default function ComfirmCodePage() {
 
         <Title title="Comfirmacion de Codigo" subtitle="coloque su codigo recibido en su email" className="flex justify-center w-full" />
 
-        <ComfirmationCodeForm />
+        <Suspense fallback={<div>Cargando...</div>}>
+          <ComfirmationCodeForm />
+        </Suspense>
         <CountdownTimer timeSeconds={60} />
 
       </Box>

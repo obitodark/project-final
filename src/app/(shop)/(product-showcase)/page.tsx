@@ -1,4 +1,3 @@
-
 import { Grid, PaginationBox } from "@/components/custom";
 import { Box } from "@/components/custom/Box";
 import { ProductGrid } from "@/components/features/product";
@@ -6,21 +5,16 @@ import { titleFont } from "@/config/fonts";
 import type { APIResponseSearchProducts } from "@/interface";
 import { getRequest } from "@/utils/http";
 
-
-
 interface Props {
   params: {
     id: string
   }
 }
 
-
-export default async function ({ params }: Props) {
+export default async function HomePage({ params }: Props) {
   const { id } = params;
   const decodedQueryString = decodeURIComponent(id);
-
   const data = await getRequest<APIResponseSearchProducts>(`/product/search?${decodedQueryString}`);
-
   return (
     <>
       <Grid cols={{ xs: 12 }} className="flex justify-end">
