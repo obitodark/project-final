@@ -1,4 +1,5 @@
 "use client"
+import React from "react";
 import { Accordion } from "../../ui/accordion"
 import { RadioGroup } from "../../ui/radio-group"
 import { SliderPrice } from "../../custom/SliderPrice"
@@ -20,7 +21,8 @@ export const ListFilter = () => {
   const dispatch = useDispatch();
   const filters = useAppSelector((state) => state.filter);
   const router = useRouter();
-  const buildUrl = () => buildProductSearchUrl(filters);;
+  const buildUrl = () => buildProductSearchUrl(filters);
+  const { name, category, brands, subcategories } = filters;
   const handleCheckboxChange = (item: string, type: 'subcategories' | 'brands') => {
     if (type === 'subcategories') {
       dispatch(toggleSubcategory(item));
@@ -30,7 +32,7 @@ export const ListFilter = () => {
   };
 
   const areFiltersApplied = () => {
-    const { name, category, brands, subcategories } = filters;
+
     const safeBrands = brands ?? [];
     const safeSubcategories = subcategories ?? [];
     return (
@@ -47,14 +49,14 @@ export const ListFilter = () => {
       return (await getRequest<APIResponseCategory>("/categories")).data?.result || [];
     },
   });
-  const { data: brands = [] } = useQuery<Brand[]>({
+  const { data: brandsApi = [] } = useQuery<Brand[]>({
     queryKey: ['brands'],
     queryFn: async () => {
       return (await getRequest<APIResponseBrand>("/brands")).data?.result || [];
     },
   });
 
-  const { data: subcategories = [] } = useQuery<Subcategory[]>({
+  const { data: subcategoriesApi = [] } = useQuery<Subcategory[]>({
     queryKey: ['subcategories'],
     queryFn: async () => {
       return (await getRequest<APIResponseSubcategories>("/subcategories")).data?.result || [];
@@ -95,12 +97,13 @@ export const ListFilter = () => {
             </RadioGroup>
           </ListDropdown>
           <ListDropdown label="Subcategorias">
-            {subcategories.map(subcategory => (
-              <CheckboxItem key={subcategory.id} label={subcategory.name} onCheckedChange={() => handleCheckboxChange(subcategory.name, "subcategories")} />
-            ))}
+            {subcategoriesApi.filter(item => item.category.name === `${category}`)
+              .map(subcategory => (
+                <CheckboxItem key={subcategory.id} label={subcategory.name} onCheckedChange={() => handleCheckboxChange(subcategory.name, "subcategories")} />
+              ))}
           </ListDropdown>
           <ListDropdown label="Marcas">
-            {brands.map(brand => (
+            {brandsApi.map(brand => (
               <CheckboxItem key={brand.id} label={brand.name} onCheckedChange={() => handleCheckboxChange(brand.name, "brands")} />
             ))}
           </ListDropdown>
