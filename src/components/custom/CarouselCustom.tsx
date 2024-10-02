@@ -33,9 +33,8 @@ export const CarouselCustom = ({ images, value = 0 }: Props) => {
                   <Image
                     src={image.url}
                     alt={`Slide ${index + 1}`}
-                    layout="fill"
-                    objectFit="cover"
-                    objectPosition="center"
+                    fill
+                    style={{ objectFit: "contain", objectPosition: "center" }} 
                     className="rounded-xl"
                   />
                 </div>
@@ -44,7 +43,7 @@ export const CarouselCustom = ({ images, value = 0 }: Props) => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious  />
+      <CarouselPrevious />
       <CarouselNext />
     </Carousel>
   );

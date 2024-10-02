@@ -11,20 +11,12 @@ import { Button } from "../../ui/button"
 import { getToken, removeToken } from "@/utils/authService"
 import type { APIResponseUser, ResponseJwt, Token, User } from "@/interface"
 import { jwtDecode } from "jwt-decode"
-import { useSelector } from "react-redux"
-import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import { getRequest } from "@/utils/http"
 
-
-
-
 export const Sidebar = () => {
-
-
   const router = useRouter()
-
   const handlerLogOut = () => {
     removeToken()
     router.push("/")
@@ -42,15 +34,12 @@ export const Sidebar = () => {
     },
   });
 
-
   return (
-
     <Box className={`bg-white    min-h-dvh p-5 w-auto sm:w-[320px] flex flex-col justify-between`}>
       <nav className='flex flex-col gap-2 justify-center'>
         <Box className='flex justify-center'>
           <Title title='Shop|Store' subtitle='SHOP | STORE' />
         </Box>
-
         <Box className='w-full flex flex-col items-center justify-center'>
           <Image
             src="/imgs/que-significa-tu-foto-de-perfil.webp"
@@ -78,7 +67,6 @@ export const Sidebar = () => {
           <Link href={"/admin/brands"} className='px-3 py-2  flex items-center gap-2  text-sm rounded-md text-stone-500 font-semibold hover:bg-indigo-600 hover:text-white hover:font-light w-full'>
             <FiBox />  Marcas
           </Link>
-
         </Box>
         <Box className='mx-5 mt-20 '>
           <Button onClick={handlerLogOut} className="w-full" >

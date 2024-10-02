@@ -2,7 +2,7 @@ import { getToken } from '@/utils/authService';
 import axios from 'axios';
 
 const axiosAuthInstance = axios.create({
-  baseURL: 'http://localhost:8080/api/v1',
+  baseURL: 'http://98.80.244.103:8080/api/v1',
   timeout: 60000,
 });
 
