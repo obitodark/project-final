@@ -17,11 +17,10 @@ interface Props {
 }
 export const CardDialog = ({ state, onClose, image, name = "producto", quantity, price,onAdd }: Props) => {
   return (
-    <DialogCustom state={state} onClose={onClose} title="Comfirmacion"
-      description={`se ha agregado al carrito "${name}"`}
+    <DialogCustom state={state} onClose={onClose} title="Confirmacion"
+      description={`desea agregar al carrito "${name}"`}
       className="sm:max-w-[425px]"
     >
-
       <Box className="flex gap-2">
         <Image src={`${image}`} width={150} height={150} alt="image" />
         <Box className="flex flex-col justify-center text-sm font-semibold">

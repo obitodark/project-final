@@ -53,18 +53,19 @@ export default function CartPage() {
               <span className="text-sm">Nro. Product</span>
               <span className="text-right text-sm">{totalQuantity} articulos</span>
               <span className="text-sm">Subtotal</span>
-              <span className="text-right text-sm">{cart && cart.totalPrice}</span>
+              <span className="text-right text-sm">{cart && cart.totalPrice.toFixed(2)}</span>
               <span className="text-sm">Impuestos (15%)</span>
               <span className="text-right text-sm">- -</span>
               <span className="mt-5 text-xl">Total</span>
-              <span className=" mt-5 text-right font-semibold">PEN  {cart && cart.totalPrice
-              }</span>
+              <span className="mt-5 text-right font-semibold">
+                PEN {cart && cart.totalPrice.toFixed(2)}
+              </span>
             </Grid>
             <Box className="mt-3">
               <Link
                 className="flex justify-center bg-indigo-600 text-white p-1 rounded-md text-sm"
                 href={`${cart?.user.address ? "/checkout" : "/checkout/address"}`}>
-                Pagar
+                Siguiente
               </Link>
             </Box>
           </Grid>

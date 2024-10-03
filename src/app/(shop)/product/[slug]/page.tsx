@@ -11,6 +11,7 @@ import type { APIResponseProduct } from '@/interface';
 import { getToken, validateAuthUser } from '@/utils/authService';
 import { getRequest, postRequest } from '@/utils/http';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -79,7 +80,7 @@ export default function ProductSlugPage({ params }: Props) {
 
   return (
     <Grid container spacing={{ xs: 3 }} cols={{ xs: 1, lg: 3 }}
-      className=' my-20 '>
+      className=' mb-20 mt-2 '>
       <Grid item span={{ xs: 1, lg: 3 }}>
         <Title
           title='Detalle de Articulo'
@@ -133,6 +134,9 @@ export default function ProductSlugPage({ params }: Props) {
               onClick={isOpenDialog}>
               Añadir al carrito
             </Button>
+            <Link href={"/"} className='underline font-semibold text-sm'>
+              seguir comprando
+            </Link>
           </Box>
           <h3 className='font-bold text-sm mt-5'>Descripción</h3>
           <p className='font-light'>

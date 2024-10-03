@@ -22,7 +22,7 @@ export const ListFilter = () => {
   const filters = useAppSelector((state) => state.filter);
   const router = useRouter();
   const buildUrl = () => buildProductSearchUrl(filters);
-  const { name, category, brands, subcategories } = filters;
+  const { category, brands, subcategories } = filters;
   const handleCheckboxChange = (item: string, type: 'subcategories' | 'brands') => {
     if (type === 'subcategories') {
       dispatch(toggleSubcategory(item));
@@ -31,17 +31,6 @@ export const ListFilter = () => {
     }
   };
 
-  const areFiltersApplied = () => {
-
-    const safeBrands = brands ?? [];
-    const safeSubcategories = subcategories ?? [];
-    return (
-      name !== "" || name !== undefined ||
-      category !== "" ||
-      safeBrands.length > 0 ||
-      safeSubcategories.length > 0
-    );
-  };
 
   const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ['categories'],
@@ -76,10 +65,9 @@ export const ListFilter = () => {
   };
 
   useEffect(() => {
-    if (areFiltersApplied()) {
-      const url = buildUrl();
-      router.push(url);
-    }
+  
+    const url = buildUrl();
+    router.push(url);
   }, [filters]);
 
 
@@ -90,7 +78,7 @@ export const ListFilter = () => {
         <Accordion type="multiple" className="w-full px-5">
           <ListDropdown label="Categorias">
             <RadioGroup
-              onValueChange={handleRadioChange}>
+              value={`${category}`} onValueChange={handleRadioChange}>
               {categories.map(item => (
                 <RadioButtonItem key={item.id} value={item.name} />
               ))}
@@ -99,12 +87,20 @@ export const ListFilter = () => {
           <ListDropdown label="Subcategorias">
             {subcategoriesApi.filter(item => item.category.name === `${category}`)
               .map(subcategory => (
-                <CheckboxItem key={subcategory.id} label={subcategory.name} onCheckedChange={() => handleCheckboxChange(subcategory.name, "subcategories")} />
+                <CheckboxItem
+                  key={subcategory.id}
+                  label={subcategory.name}
+                  checked={subcategories && subcategories.includes(subcategory.name)}
+                  onCheckedChange={() => handleCheckboxChange(subcategory.name, "subcategories")} />
               ))}
           </ListDropdown>
           <ListDropdown label="Marcas">
             {brandsApi.map(brand => (
-              <CheckboxItem key={brand.id} label={brand.name} onCheckedChange={() => handleCheckboxChange(brand.name, "brands")} />
+              <CheckboxItem
+                key={brand.id}
+                label={brand.name}
+                checked={brands && brands.includes(brand.name)}
+                onCheckedChange={() => handleCheckboxChange(brand.name, "brands")} />
             ))}
           </ListDropdown>
           <ListDropdown label="Rango de Precio">

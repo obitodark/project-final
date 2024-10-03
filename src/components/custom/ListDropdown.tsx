@@ -1,3 +1,5 @@
+import React from "react"
+
 import { AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 
 interface Props {

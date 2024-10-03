@@ -58,7 +58,7 @@ export default function CheckoutPage() {
                 <Box>
                   <p className="line-clamp-2">{product.product.name}</p>
                   <p>precio :{product.priceUnitary} (x{product.quantity})</p>
-                  <p className="font-bold">Subtotal : PEN {product.price}</p>
+                  <p className="font-bold">Subtotal : PEN {product.price.toFixed(2)}</p>
                 </Box>
               </Box>
             ))
@@ -77,11 +77,11 @@ export default function CheckoutPage() {
               <span>Nro. Product</span>
               <span className="text-right">{totalQuantity} articulos</span>
               <span>Subtotal</span>
-              <span className="text-right">PEN  {cart && cart.totalPrice}</span>
+              <span className="text-right">PEN  {cart && cart.totalPrice.toFixed(2)}</span>
               <span>Impuestos (15%)</span>
               <span className="text-right">PEN  --</span>
               <span className="mt-5 text-2xl">Total</span>
-              <span className=" mt-5 text-right">PEN  {cart && cart.totalPrice}
+              <span className=" mt-5 text-right">PEN  {cart && cart.totalPrice.toFixed(2)}
               </span>
             </Grid>
             <Box>
@@ -92,8 +92,8 @@ export default function CheckoutPage() {
                 </span>
               </p>
               <Button
-                onClick={handlerPayProduct}
-              >
+                className="w-full"
+                onClick={handlerPayProduct}>
                 pagar
               </Button>
             </Box>

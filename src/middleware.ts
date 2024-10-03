@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtDecode } from "jwt-decode";
 import type { ResponseJwt } from "./interface";
+import { removeToken } from "./utils/authService";
 
 export function middleware(request: NextRequest) {
   const authTokens = request.cookies.get("authTokens")?.value;
@@ -13,7 +14,7 @@ export function middleware(request: NextRequest) {
       decoded = jwtDecode<ResponseJwt>(authTokens);
       const currentTime = Math.floor(Date.now() / 1000);
       if (decoded.exp && decoded.exp < currentTime) {
-
+        removeToken()
         decoded = null;
       }
     } catch {

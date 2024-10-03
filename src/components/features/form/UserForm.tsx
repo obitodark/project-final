@@ -12,9 +12,10 @@ import { FormFieldCustom } from "@/components/custom/FormFieldCustom";;
 import { Grid } from "../../custom";
 import { signupFormSchema } from "@/utils/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postRequest } from "@/utils/http";
+import { putRequest } from "@/utils/http";
 import { useRouter } from "next/navigation"
 import type { User } from "@/interface";
+import { userFormSchema } from "@/utils/zod/UserSchema";
 
 
 interface Props {
@@ -25,26 +26,25 @@ export const UserForm = ({ dataUser }: Props) => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const form = useForm<z.infer<typeof signupFormSchema>>({
-    resolver: zodResolver(signupFormSchema),
+  const form = useForm<z.infer<typeof userFormSchema>>({
+    resolver: zodResolver(userFormSchema),
     defaultValues: {
       name: dataUser && dataUser.name,
       lastName: dataUser?.lastName || "",
       typeDoc: dataUser?.typeDoc || "DNI",
       numDoc: dataUser?.numDoc || "",
       gender: dataUser?.gender || "",
-      phone: dataUser?.phone || "",
       email: dataUser?.email || "",
       age: dataUser?.age || 0,
-      password: undefined,
+
     },
   });
 
   const mutation = useMutation<any, Error, any>({
     mutationFn: async (userData) => {
-      const response = await postRequest<any>("/authenticate/signUpUser", userData, true);
-      if (response.state !== 200) {
-        router.push("/auth/new-account/confirm-code?origin=register")
+      const response = await putRequest<any>(`/users/${dataUser?.id}`, userData, true);
+      if (response.state === 200) {
+        router.push("/auth/new-account/confirm-code?origin=address")
       }
       return response
     },
@@ -53,7 +53,7 @@ export const UserForm = ({ dataUser }: Props) => {
   });
 
 
-  const onSubmit = async (values: z.infer<typeof signupFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof userFormSchema>) => {
     console.log(values)
     mutation.mutate(values)
   };
@@ -63,7 +63,6 @@ export const UserForm = ({ dataUser }: Props) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className=" relative flex flex-col ">
         <Grid container cols={{ xs: 1, sm: 2 }} spacing={{ xs: 4, sm: 4 }}>
-
           <FormFieldCustom
             control={form.control}
             name="name"
@@ -71,7 +70,6 @@ export const UserForm = ({ dataUser }: Props) => {
           >
             <InputText placeholder="John" />
           </FormFieldCustom>
-
           <FormFieldCustom
             control={form.control}
             name="lastName"
@@ -98,14 +96,12 @@ export const UserForm = ({ dataUser }: Props) => {
               </FormItem>
             )}
           />
-
           <FormFieldCustom
             control={form.control}
             name="age"
             label="edad"
           >
             <InputText type="number" step="1" placeholder="20...." />
-
           </FormFieldCustom>
           <FormFieldCustom
             control={form.control}
@@ -113,17 +109,6 @@ export const UserForm = ({ dataUser }: Props) => {
             label="Número de Documento (DNI)"
           >
             <InputText placeholder="12345678" />
-          </FormFieldCustom>
-
-
-
-          <FormFieldCustom
-            control={form.control}
-            name="phone"
-            label="telefono"
-
-          >
-            <InputText placeholder="987654321" />
           </FormFieldCustom>
           <FormFieldCustom
             control={form.control}
@@ -133,22 +118,10 @@ export const UserForm = ({ dataUser }: Props) => {
           >
             <InputText type="email" placeholder="example@mail.com" />
           </FormFieldCustom>
-
-          <FormFieldCustom
-            control={form.control}
-            name="password"
-            label="Contraseña"
-            rules={{ required: "Contraseña es requerida" }}
-          >
-            <InputText type="password" placeholder="******" />
-          </FormFieldCustom>
-
-
+          <Grid item span={{ xs: 1, sm: 2 }} />
           <Button type="submit" className="mt-10 rounded text-sm">
-            Registrarse
+            Actualizar
           </Button>
-
-
         </Grid>
       </form>
     </Form>

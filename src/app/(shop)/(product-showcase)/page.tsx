@@ -14,7 +14,7 @@ interface Props {
   }
 }
 
-export default async function HomePage({ params }: Props) {
+export default  function HomePage({ params }: Props) {
   const { id } = params;
   const decodedQueryString = decodeURIComponent(id);
 

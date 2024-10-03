@@ -9,12 +9,14 @@ import { DrawerFilter } from "../drawer/DrawerFilter";
 import { useBoolean } from "@/hook/useBoolean";
 import { SelectCustom } from "../../custom/SelectCustom";
 import { SelectItem } from "../../ui/select";
+import { useAppSelector } from "@/store";
 
 
 export const SearchFilter = () => {
   const dispatch = useDispatch();
   const [isOpen, isClose, state] = useBoolean()
-
+  const filters = useAppSelector((state) => state.filter);
+  const { name } = filters;
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setName(event.target.value));
   };
@@ -35,6 +37,7 @@ export const SearchFilter = () => {
             placeholder="Busqueda..."
             className="flex  gap-1 rounded-md w-full"
             onChange={handleNameChange}
+            value={name}
           />
         </div>
         <div className="flex gap-3 w-full">

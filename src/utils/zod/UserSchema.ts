@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const signupFormSchema = z.object({
+export const userFormSchema = z.object({
   name: z.string()
     .min(1, "Nombres es requerido")
     .max(100, "Nombres debe tener menos de 100 caracteres"),
@@ -52,14 +52,4 @@ export const signupFormSchema = z.object({
     .min(1, "Email es requerido"),
 
 
-
-  password: z
-    .string()
-    .min(8, { message: 'Tener al menos 8 caracteres de longitud' })
-    .regex(/[a-zA-Z]/, { message: 'Contener al menos una letra' })
-    .regex(/[0-9]/, { message: 'Contener al menos un número' })
-    .regex(/[^a-zA-Z0-9]/, {
-      message: 'Contener al menos un carácter especial',
-    })
-    .trim(),
 });
