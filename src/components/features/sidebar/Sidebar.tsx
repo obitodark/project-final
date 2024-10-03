@@ -38,11 +38,11 @@ export const Sidebar = () => {
     <Box className={`bg-white    min-h-dvh p-5 w-auto sm:w-[320px] flex flex-col justify-between`}>
       <nav className='flex flex-col gap-2 justify-center'>
         <Box className='flex justify-center'>
-          <Title title='Shop|Store' subtitle='SHOP | STORE' />
+          <Title title='Tienda | Obis' subtitle='Tienda online' />
         </Box>
         <Box className='w-full flex flex-col items-center justify-center'>
           <Image
-            src="/imgs/que-significa-tu-foto-de-perfil.webp"
+            src="/imgs/54650051.png"
             width={100}
             height={100}
             alt='image'
